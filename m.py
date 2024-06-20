@@ -216,8 +216,8 @@ def handle_bgmi(message):
             bot.reply_to(message, "❌Your subscription has expired. Please contact an admin to renew❌")
             return
         if user_id not in admin_id:
-            if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 180:
-                response = "❄️You Are On Cooldown. Please Wait 3min Before Running The /bgmi Command Again❄️"
+            if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 240:
+                response = "❄️You Are On Cooldown. Please Wait 4min Before Running The /bgmi Command Again❄️"
                 bot.reply_to(message, response)
                 return
             bgmi_cooldown[user_id] = datetime.datetime.now()
@@ -233,7 +233,7 @@ def handle_bgmi(message):
                 record_command_logs(user_id, '/bgmi', target, port, time)
                 log_command(user_id, target, port, time)
                 start_attack_reply(message, target, port, time)
-                full_command = f"./bgmi {target} {port} {time} 300"
+                full_command = f"./bgmi {target} {port} {time} 320"
                 subprocess.run(full_command, shell=True)
                 response = f" 🎮BGMI Attack Finished! 🎮.\n\n🎯Target: {target}\n🚪Port: {port}\n⏳Time: {time}"
         else:
