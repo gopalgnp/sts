@@ -216,8 +216,8 @@ def handle_bgmi(message):
             bot.reply_to(message, "❌Your subscription has expired. Please contact an admin to renew❌")
             return
         if user_id not in admin_id:
-            if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 240:
-                response = "❄️You Are On Cooldown. Please Wait 4min Before Running The /bgmi Command Again❄️"
+            if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < 180:
+                response = "❄️You Are On Cooldown. Please Wait 3min Before Running The /bgmi Command Again❄️"
                 bot.reply_to(message, response)
                 return
             bgmi_cooldown[user_id] = datetime.datetime.now()
