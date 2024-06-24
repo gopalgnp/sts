@@ -7,10 +7,10 @@ import string
 import json
 
 # Insert your Telegram bot token here
-bot = telebot.TeleBot('7248601249:AAHCcvqi4fAkddlGJMnJBpiEpYn70FH0Iec')
+bot = telebot.TeleBot('7329977373:AAHsIUXc9Wb4hgdm0lGqDr2ntOjeHIks23s')
 
 # Admin user IDs
-admin_id = {"881808734"}
+admin_id = {"6529567486"}
 
 # File to store allowed user IDs and expiration dates
 USER_FILE = "users.json"
@@ -22,7 +22,7 @@ LOG_FILE = "log.txt"
 KEY_FILE = "keys.json"
 
 # Cooldown time for users
-COOLDOWN_TIME = 300  # 5minutes
+COOLDOWN_TIME = 240  # 5minutes
 
 # Dictionary to store the last time each user ran the /bgmi command
 bgmi_cooldown = {}
@@ -144,7 +144,7 @@ def handle_bgmi(message):
         if datetime.datetime.now() <= expiration_date:
             if user_id not in admin_id:
                 if user_id in bgmi_cooldown and (datetime.datetime.now() - bgmi_cooldown[user_id]).seconds < COOLDOWN_TIME:
-                    response = f"You are on cooldown. Please wait {COOLDOWN_TIME // 300} 5minutes before running the /bgmi command again."
+                    response = f"You are on cooldown. Please wait {COOLDOWN_TIME // 240}4minutes before running the /bgmi command again."
                     bot.reply_to(message, response)
                     return
                 bgmi_cooldown[user_id] = datetime.datetime.now()
@@ -319,6 +319,27 @@ def admin_commands(message):
 💥 /clearlogs: Clear the logs file.
 💥 /broadcast <message>: Broadcast a message to all users.
 '''
+    bot.reply_to(message, response)
+
+@bot.message_handler(commands=['remove'])
+def remove_user(message):
+    user_id = str(message.chat.id)
+    if user_id in admin_id:
+        command = message.text.split()
+        if len(command) == 2:
+            target_user_id = command[1]
+            users = read_users()
+            if target_user_id in users:
+                del users[target_user_id]
+                save_users(users)
+                response = f"User {target_user_id} removed successfully."
+            else:
+                response = "User not found."
+        else:
+            response = "Usage: /remove <user_id>"
+    else:
+        response = "ONLY OWNER CAN USE."
+
     bot.reply_to(message, response)
 
 @bot.message_handler(commands=['broadcast'])
